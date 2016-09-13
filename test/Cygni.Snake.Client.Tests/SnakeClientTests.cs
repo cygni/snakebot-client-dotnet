@@ -162,7 +162,7 @@ namespace Cygni.Snake.Client.Tests
 
             client.Start(new StubSnakeBot() {AutoStart = false});
 
-            Assert.Equal(socket.OutgoingJson.Count, 1);
+            Assert.Equal(2, socket.OutgoingJson.Count);
         }
 
         [Fact]
