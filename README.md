@@ -1,6 +1,6 @@
 # Cygni C# Snake Bot Client
 
-[![Build Status](http://jenkins.snake.cygni.se/buildStatus/icon?job=Snake-Client-Csharp)](http://jenkins.snake.cygni.se/job/Snake-Client-Csharp/)
+[![Build Status](http://jenkins.snake.cygni.se/buildStatus/icon?job=snakebot-client-dotnet)](http://jenkins.snake.cygni.se/job/snakebot-client-dotnet/)
 
 ## Baby, I'm just gonna snake, snake, snake, snake, snake. I snake it off, I snake it off
 
