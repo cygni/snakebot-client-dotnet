@@ -65,7 +65,7 @@ namespace Cygni.Snake.Client.Tests
         {
             var socket = new StubWebSocket(WebSocketState.Open);
             var client = new SnakeClient(socket);
-            Assert.Throws<ArgumentNullException>(() => client.Start(null, true));
+            Assert.Throws<ArgumentNullException>(() => client.Start(null));
         }
 
         [Theory]
@@ -79,7 +79,7 @@ namespace Cygni.Snake.Client.Tests
         {
             var socket = new StubWebSocket(state);
             var client = new SnakeClient(socket);
-            Assert.Throws<InvalidOperationException>(() => client.Start(new StubSnakeBot(), true));
+            Assert.Throws<InvalidOperationException>(() => client.Start(new StubSnakeBot()));
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace Cygni.Snake.Client.Tests
             socket.IncomingJson.Enqueue(new JObject { { "type", MessageType.InvalidPlayerName }, { "reason", "taken" } });
             var client = new SnakeClient(socket);
 
-            Assert.Throws<InvalidOperationException>(() => client.Start(new StubSnakeBot(), true));
+            Assert.Throws<InvalidOperationException>(() => client.Start(new StubSnakeBot()));
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace Cygni.Snake.Client.Tests
             var client = new SnakeClient(socket, new StubGameObserver());
 
             var bot = new StubSnakeBot();
-            client.Start(bot, true);
+            client.Start(bot);
 
             var registerMessage = socket.OutgoingJson[0];
             Assert.Equal("se.cygni.snake.api.request.RegisterPlayer", (string)registerMessage["type"]);
@@ -116,7 +116,7 @@ namespace Cygni.Snake.Client.Tests
 
             var observer = new StubGameObserver();
             var client = new SnakeClient(socket, observer);
-            client.Start(new StubSnakeBot(), true);
+            client.Start(new StubSnakeBot());
 
             Assert.Equal(1, observer.GameStartCalls);
         }
@@ -135,9 +135,34 @@ namespace Cygni.Snake.Client.Tests
             var observer = new StubGameObserver();
 
             var client = new SnakeClient(socket, observer);
-            client.Start(new StubSnakeBot(), true);
+            client.Start(new StubSnakeBot());
 
             Assert.Equal(1, observer.UpdateCalls);
+        }
+
+        [Fact]
+        public void Start_SendsStartGameRequestAfterServerHasConfirmedRegistrationWhenAutoStartEnabled()
+        {
+            var socket = new StubWebSocket(WebSocketState.Open);
+            socket.IncomingJson.Enqueue(new JObject { { "type", MessageType.PlayerRegistered } });
+            var client = new SnakeClient(socket, new StubGameObserver());
+
+            client.Start(new StubSnakeBot() {AutoStart = true});
+
+            var startGameMessage = socket.OutgoingJson[2];
+            Assert.Equal("se.cygni.snake.api.request.StartGame", (string)startGameMessage["type"]);
+        }
+
+        [Fact]
+        public void Start_DoesNotSendStartGameRequestAfterServerHasConfirmedRegistrationWhenAutoStartDisabled()
+        {
+            var socket = new StubWebSocket(WebSocketState.Open);
+            socket.IncomingJson.Enqueue(new JObject { { "type", MessageType.PlayerRegistered } });
+            var client = new SnakeClient(socket, new StubGameObserver());
+
+            client.Start(new StubSnakeBot() {AutoStart = false});
+
+            Assert.Equal(socket.OutgoingJson.Count, 1);
         }
 
         [Fact]
@@ -154,7 +179,7 @@ namespace Cygni.Snake.Client.Tests
             var observer = new StubGameObserver();
 
             var client = new SnakeClient(socket, observer);
-            client.Start(new StubSnakeBot(), true);
+            client.Start(new StubSnakeBot());
 
             Assert.Equal(observer.GameEndCalls, 1);
         }
@@ -173,7 +198,7 @@ namespace Cygni.Snake.Client.Tests
             var observer = new StubGameObserver();
 
             var client = new SnakeClient(socket, observer);
-            client.Start(new StubSnakeBot(), true);
+            client.Start(new StubSnakeBot());
 
             Assert.Equal(1, observer.SnakeDiedCalls);
         }
@@ -194,7 +219,7 @@ namespace Cygni.Snake.Client.Tests
             var bot = new StubSnakeBot(map => { receivedCall = true; return Direction.Down; });
 
             var client = new SnakeClient(socket);
-            client.Start(bot, true);
+            client.Start(bot);
 
             Assert.True(receivedCall);
         }
@@ -210,7 +235,7 @@ namespace Cygni.Snake.Client.Tests
             var bot = new StubSnakeBot(map => { receivedCall = true; return Direction.Down; });
 
             var client = new SnakeClient(socket);
-            client.Start(bot, true);
+            client.Start(bot);
 
             Assert.True(receivedCall);
         }
@@ -232,7 +257,7 @@ namespace Cygni.Snake.Client.Tests
             });
 
             var client = new SnakeClient(socket, new StubGameObserver());
-            client.Start(new StubSnakeBot(direction), true);
+            client.Start(new StubSnakeBot(direction));
 
             var moveMessage = socket.OutgoingJson.Last();
             Assert.Equal("se.cygni.snake.api.request.RegisterMove", (string)moveMessage["type"]);

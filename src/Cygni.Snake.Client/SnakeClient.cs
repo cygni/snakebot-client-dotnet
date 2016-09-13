@@ -19,7 +19,6 @@ namespace Cygni.Snake.Client
         private const string ClientVersion = "0.0.1";
         private readonly IGameObserver _observer;
         private readonly WebSocket _socket;
-        private bool _isTrainingMode;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SnakeClient" /> class that communicates
@@ -69,14 +68,13 @@ namespace Cygni.Snake.Client
         /// </summary>
         /// <remarks>This method will throw an exception if the web socket is not open.</remarks>
         /// <param name="snake">The specified <see cref="SnakeBot" /></param>
-        /// <param name="isTrainingMode">Indicates if the game mode is training or not</param>
         /// <exception cref="ArgumentNullException" />
         /// <exception cref="InvalidOperationException">
         ///     If the socket is not opened, or if the specified <see cref="SnakeBot" /> has an invalid name.
         /// </exception>
-        public void Start(SnakeBot snake, bool isTrainingMode)
+        public void Start(SnakeBot snake)
         {
-            Start(snake, isTrainingMode, null);
+            Start(snake, null);
         }
 
         /// <summary>
@@ -88,16 +86,13 @@ namespace Cygni.Snake.Client
         /// </summary>
         /// <remarks>This method will throw an exception if the web socket is not open.</remarks>
         /// <param name="snake">The specified <see cref="SnakeBot" /></param>
-        /// <param name="isTrainingMode">Indicates if the game mode is training or not</param>
         /// <param name="settings">The specified <see cref="GameSettings" />, can be null.</param>
         /// <exception cref="ArgumentNullException" />
         /// <exception cref="InvalidOperationException">
         ///     If the socket is not opened, or if the specified <see cref="SnakeBot" /> has an invalid name.
         /// </exception>
-        public void Start(SnakeBot snake, bool isTrainingMode, GameSettings settings)
+        public void Start(SnakeBot snake, GameSettings settings)
         {
-            _isTrainingMode = isTrainingMode;
-
             if (snake == null)
             {
                 throw new ArgumentNullException(nameof(snake));
@@ -144,6 +139,13 @@ namespace Cygni.Snake.Client
 
                 case MessageType.InvalidPlayerName:
                     OnInvalidPlayerName(snake, json);
+                    break;
+
+                case MessageType.PlayerRegistered:
+                    if (snake.AutoStart)
+                    {
+                        SendStartGameRequest();
+                    }
                     break;
 
                 case MessageType.GameLink:

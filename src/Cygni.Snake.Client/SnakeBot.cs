@@ -23,6 +23,12 @@
         public string Name { get; }
 
         /// <summary>
+        /// Gets or sets a value indicating if this SnakeBot automatically starts a game on
+        /// successful player registration.
+        /// </summary>
+        public bool AutoStart { get; set; }
+
+        /// <summary>
         /// When overriden in a derived class, gets the <see cref="Direction"/>
         /// in which this bot wants to move based on the specified <see cref="Map"/>.
         /// </summary>
