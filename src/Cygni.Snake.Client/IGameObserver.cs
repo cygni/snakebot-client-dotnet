@@ -29,5 +29,11 @@
         /// </summary>
         /// <param name="map">The updated map.</param>
         void OnUpdate(Map map);
+
+        /// <summary>
+        /// Notifies this observer that a new game link has been received.
+        /// </summary>
+        /// <param name="url">The game url.</param>
+        void OnGameLink(string url);
     }
 }

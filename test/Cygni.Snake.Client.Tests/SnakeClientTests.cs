@@ -29,6 +29,13 @@ namespace Cygni.Snake.Client.Tests
             UpdateCalls++;
         }
 
+        public void OnGameLink(string url)
+        {
+            GameLinkCalls++;
+        }
+
+        public int GameLinkCalls { get; private set; }
+
         public int GameStartCalls { get; private set; }
         public int GameEndCalls { get; private set; }
         public int UpdateCalls { get; private set; }
@@ -98,19 +105,6 @@ namespace Cygni.Snake.Client.Tests
             var registerMessage = socket.OutgoingJson[0];
             Assert.Equal("se.cygni.snake.api.request.RegisterPlayer", (string)registerMessage["type"]);
             Assert.Equal(bot.Name, (string)registerMessage["playerName"]);
-        }
-
-        [Fact]
-        public void Start_SendsStartGameRequestAfterServerHasConfirmedRegistration()
-        {
-            var socket = new StubWebSocket(WebSocketState.Open);
-            socket.IncomingJson.Enqueue(new JObject { { "type", MessageType.PlayerRegistered } });
-            var client = new SnakeClient(socket, new StubGameObserver());
-
-            client.Start(new StubSnakeBot(), true);
-
-            var startGameMessage = socket.OutgoingJson[2];
-            Assert.Equal("se.cygni.snake.api.request.StartGame", (string)startGameMessage["type"]);
         }
 
         [Fact]

@@ -62,6 +62,17 @@ namespace Cygni.Snake.SampleBot
             });
         }
 
+        public void OnGameLink(string url)
+        {
+            Task.Run(() =>
+            {
+                lock (Console.Out)
+                {
+                    Console.WriteLine($"The game can be viewed at '{url}'.");
+                }
+            });
+        }
+
         private static void PrintMap(Map map)
         {
             var foodTiles = map.FoodPositions.Select(p => new PrintTile(p, "F", ConsoleColor.Red));

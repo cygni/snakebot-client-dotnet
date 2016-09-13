@@ -7,6 +7,7 @@
         public const string SnakeDead = "se.cygni.snake.api.event.SnakeDeadEvent";
         public const string GameStarting = "se.cygni.snake.api.event.GameStartingEvent";
         public const string PlayerRegistered = "se.cygni.snake.api.response.PlayerRegistered";
+        public const string GameLink = "se.cygni.snake.api.event.GameLinkEvent";
         public const string InvalidPlayerName = "se.cygni.snake.api.exception.InvalidPlayerName";
         public const string HeartBeatResponse = "se.cygni.snake.api.response.HeartBeatResponse";
 

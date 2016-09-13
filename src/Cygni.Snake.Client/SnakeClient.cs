@@ -142,12 +142,12 @@ namespace Cygni.Snake.Client
                     OnSnakeDead(json);
                     break;
 
-                case MessageType.PlayerRegistered:
-                    OnPlayerRegistered();
-                    break;
-
                 case MessageType.InvalidPlayerName:
                     OnInvalidPlayerName(snake, json);
+                    break;
+
+                case MessageType.GameLink:
+                    OnGameLink(json);
                     break;
 
                 case MessageType.HeartBeatResponse:
@@ -171,12 +171,6 @@ namespace Cygni.Snake.Client
                     return sb.ToString();
                 }
             }
-        }
-
-        private void OnPlayerRegistered()
-        {
-            if (_isTrainingMode)
-                SendStartGameRequest();
         }
 
         private void OnInvalidPlayerName(SnakeBot snake, JObject json)
@@ -203,6 +197,12 @@ namespace Cygni.Snake.Client
             var map = Map.FromJson((JObject) json["map"], (string) json["receivingPlayerId"]);
             _observer.OnGameEnd(map);
         }
+
+        private void OnGameLink(JObject json)
+        {
+            _observer.OnGameLink((string)json["url"]);
+        }
+
 
         private void OnMapUpdated(SnakeBot snake, JObject json)
         {
@@ -320,6 +320,10 @@ namespace Cygni.Snake.Client
             }
 
             public void OnUpdate(Map map)
+            {
+            }
+
+            public void OnGameLink(string url)
             {
             }
         }
