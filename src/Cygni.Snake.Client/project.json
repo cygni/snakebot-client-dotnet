@@ -5,13 +5,13 @@
 
   "dependencies": {
     "Newtonsoft.Json": "8.0.3",
-    "System.Net.WebSockets": "4.0.0-*",
-    "System.Runtime": "4.1.0-*",
-    "System.Runtime.Serialization.Primitives": "4.1.0-*",
-    "Microsoft.AspNetCore.WebSockets.Protocol": "0.1.0-*",
+    "System.Net.WebSockets": "4.3.0",
+    "System.Net.WebSockets.Client": "4.3.0",
+    "System.Runtime": "4.3.0",
+    "System.Runtime.Serialization.Primitives": "4.3.0",
     "Microsoft.NETCore.App": {
       "type": "platform",
-      "version": "1.0.0-*"
+      "version": "1.0.1"
     }
   },
 

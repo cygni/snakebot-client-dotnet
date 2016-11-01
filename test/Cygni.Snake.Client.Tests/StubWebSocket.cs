@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Xunit;
 
 namespace Cygni.Snake.Client.Tests
 {
@@ -17,7 +18,7 @@ namespace Cygni.Snake.Client.Tests
 
         public StubWebSocket(WebSocketState state)
         {
-            this._state = state;
+            _state = state;
             CloseWhenNoMoreMessages = true;
         }
 
@@ -75,5 +76,21 @@ namespace Cygni.Snake.Client.Tests
         public IReadOnlyList<JObject> OutgoingJson => _messages;
 
         public Queue<JObject> IncomingJson { get; } = new Queue<JObject>();
+    }
+
+    public class SnakePlayerTests
+    {
+        [Fact]
+        public void ShouldReportCurrentDirection()
+        {
+           var snake = new SnakePlayer("id", "name", 0, new []
+           {
+               new MapCoordinate(1, 0), 
+               new MapCoordinate(0, 0), 
+           }); 
+
+            Assert.Equal(Direction.Right, snake.CurrentDirection);
+        }
+    
     }
 }

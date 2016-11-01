@@ -288,7 +288,8 @@ namespace Cygni.Snake.Client
         /// </summary>
         public static SnakeClient Connect(Uri uri, IGameObserver observer)
         {
-            var ws = new ClientWebSocket().CreateWebSocket(uri, CancellationToken.None).Result;
+            var ws = new ClientWebSocket();
+            ws.ConnectAsync(uri, CancellationToken.None).Wait();
             Task.Run(() => HearBeat(ws));
             return new SnakeClient(ws, observer);
         }

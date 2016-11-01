@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Cygni.Snake.Client
@@ -26,6 +27,23 @@ namespace Cygni.Snake.Client
         public MapCoordinate HeadPosition => IsAlive ? Positions.First() : new MapCoordinate(-1, -1);
 
         public IEnumerable<MapCoordinate> Body => IsAlive ? Positions.Skip(1) : Enumerable.Empty<MapCoordinate>();
+
+        public Direction CurrentDirection
+        {
+            get
+            {
+                var head = HeadPosition;
+                var neck = Body.FirstOrDefault() ?? head;
+                foreach (Direction direction in Enum.GetValues(typeof(Direction)))
+                {
+                    if (neck.GetDestination(direction).Equals(head))
+                    {
+                        return direction;
+                    }
+                }
+                return Direction.Down;
+            }
+        }
 
         public override string ToString()
         {
