@@ -18,7 +18,7 @@ I would also like to leave you with a qoute from the aforementioned great man
 > Anything I’ve ever attempted, I was always willing to fail. So you can’t always win, but don’t be afraid of making decisions. You can’t be paralyzed by the fear of failure or you will never push yourself. You keep pushing because you believe in yourself and in your vision and you know that it is the right thing to do, and success will come. So don’t be afraid to fail. <br /> **Arnold Schwarzenegger**
 
 ## System Requirements
-- Operating system supported by .NET Core 1.0 RC2 (https://www.microsoft.com/net/core).
+- Operating system supported by .NET Core 1.0.1 (https://www.microsoft.com/net/core), or docker.
 - Your favourite text-editor. Although we would recommend using either 'Visual Studio Code' or 'Visual Studio 2015'.
 
 ## Project structure
@@ -46,20 +46,24 @@ This project illustrates how to connect to the Cygni Snake server using a SnakeB
 - GamePrinter: An implementation of IGameObserver for printing snake updates to console.
 
 ## Get started
+Get source latest source from http://github.com/cygni/snakebot-client-dotnet.
 
-### Installing .NET Core CLI
-If you already have .NET Core CLI and .NET Core 1.0 RC2 installed, you can skip this step. Otherwise, go to: https://www.microsoft.com/net/core and follow the 'Getting Started' instructions for your operating system.
+### Building and running using Visual Studio 2015
+Prerequisites:
+- .NET Core https://www.microsoft.com/net/core
+- Visual Studio 2015 with .NET Core tooling
 
-### Building and running
-Firstly, get the latest source with git clone:
+### Building and running using Docker
+Make sure your current directory is the repository root, then build a new image from the Dockerfile in the root directory. This will compile and run the unit tests.
+
+    docker build -t snake .
+
+Start container:
     
-    git clone http://github.com/cygni/snakebot-clients
-    
-cd into the .NET client:
+    docker run -i --rm snake
 
-    cd snakebot-clients/snakebot-csharp
-
-Restore all dependencies:
+### Building and running using .NET CLI
+Make sure your current directory is the repository root, then restore all dependencies:
 
     dotnet restore
     
