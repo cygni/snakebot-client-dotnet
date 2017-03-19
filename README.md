@@ -50,8 +50,7 @@ Get source latest source from http://github.com/cygni/snakebot-client-dotnet.
 
 ### Building and running using Visual Studio 2015
 Prerequisites:
-- .NET Core https://www.microsoft.com/net/core
-- Visual Studio 2015 with .NET Core tooling
+- Visual Studio 2017 with .NET Core tooling
 
 ### Building and running using Docker
 Make sure your current directory is the repository root, then build a new image from the Dockerfile in the root directory. This will compile and run the unit tests.
