@@ -19,7 +19,7 @@ I would also like to leave you with a qoute from the aforementioned great man
 
 ## System Requirements
 - Operating system supported by .NET Core 1.0.1 (https://www.microsoft.com/net/core), or docker.
-- Your favourite text-editor. Although we would recommend using either 'Visual Studio Code' or 'Visual Studio 2015'.
+- Your favourite text-editor. Although we would recommend using either 'Visual Studio Code' or 'Visual Studio 2017'.
 
 ## Project structure
 The solution contains three projects
@@ -48,7 +48,7 @@ This project illustrates how to connect to the Cygni Snake server using a SnakeB
 ## Get started
 Get source latest source from http://github.com/cygni/snakebot-client-dotnet.
 
-### Building and running using Visual Studio 2015
+### Building and running using Visual Studio 2017
 Prerequisites:
 - Visual Studio 2017 with .NET Core tooling
 
