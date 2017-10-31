@@ -10,11 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		NuGet.Config = NuGet.Config
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cygni.Snake.SampleBot", "src\Cygni.Snake.SampleBot\Cygni.Snake.SampleBot.csproj", "{46522102-FD04-4675-BBF6-902BF5CCBFCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cygni.Snake.SampleBot", "Cygni.Snake.SampleBot\Cygni.Snake.SampleBot.csproj", "{46522102-FD04-4675-BBF6-902BF5CCBFCA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cygni.Snake.Client", "src\Cygni.Snake.Client\Cygni.Snake.Client.csproj", "{1F6290EF-877F-43C4-8243-9F56C13AA47F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cygni.Snake.Client", "Cygni.Snake.Client\Cygni.Snake.Client.csproj", "{1F6290EF-877F-43C4-8243-9F56C13AA47F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject1", "XUnitTestProject1\XUnitTestProject1.csproj", "{37383C78-F150-48BE-8BAC-6E7C01FCAAFE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cygni.Snake.Client.Tests", "Cygni.Snake.Client.Tests\Cygni.Snake.Client.Tests.csproj", "{37383C78-F150-48BE-8BAC-6E7C01FCAAFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
