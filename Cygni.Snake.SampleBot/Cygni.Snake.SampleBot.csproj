@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Cygni Snake Sample Bot</Description>
+    <VersionPrefix>1.0</VersionPrefix>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Cygni.Snake.SampleBot</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Cygni.Snake.SampleBot</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cygni.Snake.Client\Cygni.Snake.Client.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+</Project>
