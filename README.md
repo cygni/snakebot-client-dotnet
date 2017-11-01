@@ -32,7 +32,7 @@ This project contains among other things, the SnakeClient, SnakeBot and Map clas
 
 - SnakeClient: Provides the communication with the Cygni Snake server.
 - SnakeBot: Provides an abstract base class for snake bots.
-- Map: Provides an way to examine the state of the snake world.
+- Map: Provides a way to examine the state of the snake world.
 - IGameObserver: Interface for types that can observe games.
 
 #### Cygni.Snake.Client.Tests
@@ -68,15 +68,15 @@ Make sure your current directory is the repository root, then restore all depend
     
 Run unit tests (optional):
 
-    dotnet test test/Cygni.Snake.Client.Tests/
+    dotnet test Cygni.Snake.Client.Tests/
     
 Run the sample bot client:
 
-    dotnet run -p src/Cygni.Snake.SampleBot/
+    dotnet run -p Cygni.Snake.SampleBot/
 
 ### Implementing a SnakeBot
 
-The file src/Cygni.Snake.SampleBot/MySnakeBot.cs contains a skeleton SnakeBot implementation. All you need to do is to implement the GetNextMove()-method to return the direction of choice for your next move. The parameter map represents the current state of the world. It exposes a property called MySnake which represents your snake. Other than that, use the intellisense to examine its API.
+The file Cygni.Snake.SampleBot/MySnakeBot.cs contains a skeleton SnakeBot implementation. All you need to do is to implement the GetNextMove()-method to return the direction of choice for your next move. The parameter map represents the current state of the world. It exposes a property called MySnake which represents your snake. Other than that, use the intellisense to examine its API.
 
 ```csharp
 public class MySnakeBot : SnakeBot
