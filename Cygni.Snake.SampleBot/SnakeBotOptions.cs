@@ -13,6 +13,7 @@ namespace Cygni.Snake.SampleBot
         private readonly CommandOption modeOption;
         private readonly CommandOption autoOption;
         private readonly CommandOption snakeOption;
+        private readonly CommandOption printOption;
         private readonly CommandLineApplication app;
         private readonly SnakeBots bots;
 
@@ -41,7 +42,14 @@ namespace Cygni.Snake.SampleBot
                 "Specifies the snake bot implementation as registered in Program.cs. The default value is 'default'.",
                 CommandOptionType.SingleValue
             );
+
+            printOption = app.Option(
+                "-p|--print-game",
+                "If provided, the game is rendered on the standard output",
+                CommandOptionType.NoValue
+            );
         }
+
 
         public bool ValidateOptions()
         {
@@ -91,6 +99,15 @@ namespace Cygni.Snake.SampleBot
         {
             var url = $"ws://snake.cygni.se:80/{Mode}";
             return url;
+        }
+
+        public IGameObserver CreateObserver()
+        {
+            return new GamePrinter()
+            {
+                ShouldPrintMap = printOption.HasValue(),
+                ShouldPrintScores = printOption.HasValue()
+            };
         }
     }
 }

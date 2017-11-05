@@ -29,10 +29,11 @@ namespace Cygni.Snake.SampleBot
 
             var snake = options.CreateSnakeBot();
             var url = options.GetServerUrl();
+            var observer = options.CreateObserver();
 
             Console.WriteLine($"Connecting to {url}");
 
-            var client = SnakeClient.Connect(new Uri(url), new GamePrinter());
+            var client = SnakeClient.Connect(new Uri(url), observer);
             client.Start(snake);
             Console.ReadLine();
             return 0;

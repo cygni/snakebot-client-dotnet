@@ -11,6 +11,9 @@ namespace Cygni.Snake.SampleBot
     {
         private string gameLink;
 
+        public bool ShouldPrintMap { get; set; }
+        public bool ShouldPrintScores { get; set; }
+
         public void OnGameStart()
         {
             Task.Run(() =>
@@ -57,13 +60,19 @@ namespace Cygni.Snake.SampleBot
             {
                 lock (Console.Out)
                 {
-                    foreach (var snake in map.Snakes.OrderByDescending(s => s.Points))
+                    if (ShouldPrintScores)
                     {
-                        Console.ForegroundColor = PlayerColors.GetColor(snake.Id);
-                        string state = snake.IsAlive ? "(alive)" : "(dead)";
-                        Console.WriteLine($"{snake.Name}: {snake.Points} pts {state}");
+                        foreach (var snake in map.Snakes.OrderByDescending(s => s.Points))
+                        {
+                            Console.ForegroundColor = PlayerColors.GetColor(snake.Id);
+                            string state = snake.IsAlive ? "(alive)" : "(dead)";
+                            Console.WriteLine($"{snake.Name}: {snake.Points} pts {state}");
+                        }
                     }
-                    PrintMap(map);
+                    if (ShouldPrintMap)
+                    {
+                        PrintMap(map);
+                    }
                 }
             });
         }

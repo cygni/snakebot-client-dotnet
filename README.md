@@ -137,7 +137,7 @@ dotnet run -- --snake custom
 
 ### Execution
 
-The Execute method in Program.cs wires up the WebSocket connection with the SnakeClient and the SnakeBot of your choice. You can choose to omit the GamePrinter parameter in SnakeClient. Or, if you prefer, you can provide another implementation to log or do whatever cool stuff you like.
+The Execute method in Program.cs wires up the WebSocket connection with the SnakeClient and the SnakeBot of your choice. You can choose to omit the observer parameter in SnakeClient. Or, if you prefer, you can provide another implementation to log or do whatever cool stuff you like.
 
 ```csharp
 public class Program
@@ -153,10 +153,11 @@ public class Program
 
         var snake = options.CreateSnakeBot();
         var url = options.GetServerUrl();
+        var observer = options.CreateObserver();
 
         Console.WriteLine($"Connecting to {url}");
 
-        var client = SnakeClient.Connect(new Uri(url), new GamePrinter());
+        var client = SnakeClient.Connect(new Uri(url), observer));
         client.Start(snake);
         Console.ReadLine();
         return 0;

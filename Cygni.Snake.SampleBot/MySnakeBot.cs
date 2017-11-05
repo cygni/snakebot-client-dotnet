@@ -10,7 +10,7 @@ namespace Cygni.Snake.SampleBot
 
         public override Direction GetNextMove(Map map)
         {
-            return Direction.Down;
+            return Direction.Up;
         }
     }
 }
