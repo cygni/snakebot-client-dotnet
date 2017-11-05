@@ -1,5 +1,6 @@
 ﻿using System;
 using Cygni.Snake.Client;
+using Microsoft.Extensions.CommandLineUtils;
 
 namespace Cygni.Snake.SampleBot
 {
@@ -7,12 +8,35 @@ namespace Cygni.Snake.SampleBot
     {
         public static void Main(string[] args)
         {
-            var client = SnakeClient.Connect(new Uri("ws://snake.cygni.se:80/training"), new GamePrinter());
-            client.Start(new MySnakeBot("dotnetSnake")
+            var bots = new SnakeBots();
+            bots.Register("default", name => new MySnakeBot(name));
+            // register additional bot types here if you need to switch easily
+            // bots.Register("custom", name => new CustomSnakeBot(name));
+
+            var app = new CommandLineApplication();
+            var options = new SnakeBotOptions(app, bots);
+            app.Name = "Cygni Snakebot Client (.NET Core)";
+
+            app.OnExecute(() =>
             {
-                AutoStart = false
+                if (!options.ValidateOptions())
+                {
+                    return 1;
+                }
+
+                var snake = options.CreateSnakeBot();
+                var url = options.GetServerUrl();
+
+                Console.WriteLine($"Connecting to {url}");
+
+                var client = SnakeClient.Connect(new Uri(url), new GamePrinter());
+                client.Start(snake);
+                Console.ReadLine();
+                return 0;
+
             });
-            Console.ReadLine();
+
+            app.Execute(args);
         }
     }
 }

@@ -9,6 +9,8 @@ namespace Cygni.Snake.SampleBot
 {
     public class GamePrinter : IGameObserver
     {
+        private string gameLink;
+
         public void OnGameStart()
         {
             Task.Run(() =>
@@ -29,6 +31,10 @@ namespace Cygni.Snake.SampleBot
                 {
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("Game ended");
+                    if (!String.IsNullOrEmpty(gameLink))
+                    {
+                        Console.WriteLine($"View game at: {gameLink}");
+                    }
                 }
             });
         }
@@ -64,6 +70,7 @@ namespace Cygni.Snake.SampleBot
 
         public void OnGameLink(string url)
         {
+            gameLink = url;
             Task.Run(() =>
             {
                 lock (Console.Out)
@@ -127,7 +134,7 @@ namespace Cygni.Snake.SampleBot
             sb.Append('-', map.Width + 2).AppendLine();
             Console.Write(sb.ToString());
         }
-        
+
         private class PrintTile
         {
             public PrintTile(MapCoordinate position, string character, ConsoleColor color)
@@ -143,7 +150,7 @@ namespace Cygni.Snake.SampleBot
 
             public ConsoleColor Color { get; }
         }
-        
+
         /// <summary>
         /// Helper class to keep track of colors assigned to different players in the game.
         /// </summary>
