@@ -20,19 +20,20 @@ namespace Cygni.Snake.SampleBot
         {
             this.app = app;
             this.bots = bots;
+            app.HelpOption("-h|--help");
             userOption = app.Option(
                 "-u|--user",
-                "User and snake name.",
+                "Specifies the user name for this bot. This will be the name shown in the SnakeBot arena.",
                 CommandOptionType.SingleValue);
 
             modeOption = app.Option(
                 "-m|--mode",
-                "Specifies mode. Can be 'training' or 'tournament', default is 'training'",
+                "Specifies the play mode. Can be 'training' or 'tournament', default is 'training'.",
                 CommandOptionType.SingleValue);
 
             autoOption = app.Option(
                 "-a|--auto",
-                "Ensures that game is started automatically when connected. Only applicable for training mode",
+                "If provided, this option ensures that the game is started automatically when connected. Only applicable for training mode.",
                 CommandOptionType.NoValue);
 
             snakeOption = app.Option(

@@ -39,7 +39,7 @@ This project contains among other things, the SnakeClient, SnakeBot and Map clas
 Contains unit tests for the Cygni.Snake.Client library.
 
 #### Cygni.Snake.SampleBot
-This project illustrates how to connect to the Cygni Snake server using a SnakeBot implementation and the SnakeClient class.
+This project provides a command line application that connects to the Cygni Snake Server using the SnakeClient and a SnakeBot implementation of your choice.
 
 - Program: The main entry point. Connects to the server and requests a new game.
 - MySnakeBot: The sample SnakeBot implementation.
@@ -61,18 +61,35 @@ Start container:
     
     docker run -i --rm snake
 
-### Building and running using .NET CLI
-Make sure your current directory is the repository root, then restore all dependencies:
+Print usage options using:
 
-    dotnet restore
+    docker run -i --rm snake -- --help
+
+### Building and running using .NET CLI
+Make sure your current directory is the repository root, i.e. the same directory as the `Cygni.Snake.sln` file, then restore all dependencies:
+
+```
+dotnet restore
+```
     
 Run unit tests (optional):
 
-    dotnet test Cygni.Snake.Client.Tests/
+```
+$ dotnet test Cygni.Snake.Client.Tests/
+```
     
-Run the sample bot client:
+Change directory into the sample bot CLI client and run:
 
-    dotnet run -p Cygni.Snake.SampleBot/
+```bash
+$ cd Cygni.Snake.SampleBot
+$ dotnet run
+```
+
+Show usage options using (note the '--' before '--help' to avoid printing dotnet CLI help information):
+
+```bash
+$ dotnet run -- --help
+```
 
 ### Implementing a SnakeBot
 
@@ -95,17 +112,54 @@ public class MySnakeBot : SnakeBot
 }
 ```
 
-The Main()-method in Program.cs wires up the WebSocket connection with the SnakeClient and the SnakeBot of your choice. You can choose to omit the GamePrinter parameter in SnakeClient. Or, if you prefer, you can provide another implementation to log or do whatever cool stuff you like.
+### Switch between SnakeBots
+
+If you prefer, you can create several SnakeBot types and easily switch between them using the CLI-options and the SnakeBots.Register method.
+
+For example, if there is another SnakeBot implementation called `CustomSnakeBot`, it can be registered as follows:
+
+```csharp
+public static void Main(string[] args)
+{
+    var bots = new SnakeBots();
+    bots.Register("default", name => new MySnakeBot(name));
+    bots.Register("custom", name => new CustomSnakeBot(name));
+
+    ...
+}
+```
+
+It can then be selected when running the application through the `--snake` option:
+
+```
+dotnet run -- --snake custom
+```
+
+### Execution
+
+The Execute method in Program.cs wires up the WebSocket connection with the SnakeClient and the SnakeBot of your choice. You can choose to omit the GamePrinter parameter in SnakeClient. Or, if you prefer, you can provide another implementation to log or do whatever cool stuff you like.
 
 ```csharp
 public class Program
 {
-    public static void Main(string[] args)
-    {
-        var client = SnakeClient.CreateSnakeClient(new Uri("ws://snake.cygni.se:80/training"), new GamePrinter());
-        client.Start(new MySnakeBot("dotnetSnake"), true);
+    ...
 
+    private static int Execute(SnakeBotOptions options)
+    {
+        if (!options.ValidateOptions())
+        {
+            return 1;
+        }
+
+        var snake = options.CreateSnakeBot();
+        var url = options.GetServerUrl();
+
+        Console.WriteLine($"Connecting to {url}");
+
+        var client = SnakeClient.Connect(new Uri(url), new GamePrinter());
+        client.Start(snake);
         Console.ReadLine();
+        return 0;
     }
 }
 ```

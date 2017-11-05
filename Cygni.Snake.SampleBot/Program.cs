@@ -15,28 +15,27 @@ namespace Cygni.Snake.SampleBot
 
             var app = new CommandLineApplication();
             var options = new SnakeBotOptions(app, bots);
-            app.Name = "Cygni Snakebot Client (.NET Core)";
 
-            app.OnExecute(() =>
-            {
-                if (!options.ValidateOptions())
-                {
-                    return 1;
-                }
-
-                var snake = options.CreateSnakeBot();
-                var url = options.GetServerUrl();
-
-                Console.WriteLine($"Connecting to {url}");
-
-                var client = SnakeClient.Connect(new Uri(url), new GamePrinter());
-                client.Start(snake);
-                Console.ReadLine();
-                return 0;
-
-            });
-
+            app.OnExecute(() => Execute(options));
             app.Execute(args);
+        }
+
+        private static int Execute(SnakeBotOptions options)
+        {
+            if (!options.ValidateOptions())
+            {
+                return 1;
+            }
+
+            var snake = options.CreateSnakeBot();
+            var url = options.GetServerUrl();
+
+            Console.WriteLine($"Connecting to {url}");
+
+            var client = SnakeClient.Connect(new Uri(url), new GamePrinter());
+            client.Start(snake);
+            Console.ReadLine();
+            return 0;
         }
     }
 }
