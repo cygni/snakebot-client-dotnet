@@ -18,8 +18,8 @@ I would also like to leave you with a qoute from the aforementioned great man
 > Anything I’ve ever attempted, I was always willing to fail. So you can’t always win, but don’t be afraid of making decisions. You can’t be paralyzed by the fear of failure or you will never push yourself. You keep pushing because you believe in yourself and in your vision and you know that it is the right thing to do, and success will come. So don’t be afraid to fail. <br /> **Arnold Schwarzenegger**
 
 ## System Requirements
-- Operating system supported by .NET Core 1.0.1 (https://www.microsoft.com/net/core), or docker.
-- Your favourite text-editor. Although we would recommend using either 'Visual Studio Code' or 'Visual Studio 2017'.
+- Operating system supported by .NET Core (https://www.microsoft.com/net/core), or docker.
+- Your favourite text-editor. Although we would recommend using either 'Visual Studio Code' or 'Visual Studio'.
 
 ## Project structure
 The solution contains three projects
@@ -48,9 +48,9 @@ This project provides a command line application that connects to the Cygni Snak
 ## Get started
 Get source latest source from http://github.com/cygni/snakebot-client-dotnet.
 
-### Building and running using Visual Studio 2017
+### Building and running using Visual Studio
 Prerequisites:
-- Visual Studio 2017 with .NET Core tooling
+- Visual Studio with .NET Core tooling
 
 ### Building and running using Docker
 Make sure your current directory is the repository root, then build a new image from the Dockerfile in the root directory. This will compile and run the unit tests.
